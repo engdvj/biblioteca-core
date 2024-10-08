@@ -7,10 +7,11 @@ class AuthorSerializer(serializers.ModelSerializer):
         read_only=True,
         view_name='book-detail'
     )
+    detail = serializers.HyperlinkedIdentityField(view_name='author-detail')
 
     class Meta:
         model = Author
-        fields = ['id', 'name', 'books']
+        fields = ['id', 'name', 'books', 'detail']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -19,13 +20,16 @@ class CategorySerializer(serializers.ModelSerializer):
         read_only=True,
         view_name='book-detail'
     )
+    detail = serializers.HyperlinkedIdentityField(view_name='category-detail')
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'books']
+        fields = ['id', 'name', 'books', 'detail']
 
 
 class BookSerializer(serializers.ModelSerializer):
+    detail = serializers.HyperlinkedIdentityField(view_name='book-detail')
+
     class Meta:
         model = Book
-        fields = ['name', 'category', 'author', 'publication_date', 'is_published']
+        fields = ['id', 'name', 'category', 'author', 'publication_date', 'is_published', 'detail']
