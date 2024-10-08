@@ -10,9 +10,9 @@ class CategoriaLista(generics.ListCreateAPIView):
     filterset_class = CategoriaFiltro
     search_fields = ('^nome',)
     ordering_fields = ('nome',)
-    name = 'lista-categorias'
+    name = 'Categorias cadastradas'
 
 class CategoriaDetalhe(generics.RetrieveUpdateDestroyAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
-    name = 'detalhe-categoria'
+    name = 'Informações da categoria'

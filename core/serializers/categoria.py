@@ -5,9 +5,9 @@ class CategoriaSerializer(serializers.ModelSerializer):
     livros = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='detalhe-livro'
+        view_name='Informações do livro'
     )
-    detalhe = serializers.HyperlinkedIdentityField(view_name='detalhe-categoria')
+    detalhe = serializers.HyperlinkedIdentityField(view_name='Informações da categoria')
 
     class Meta:
         model = Categoria

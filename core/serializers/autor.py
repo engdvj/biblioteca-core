@@ -5,9 +5,9 @@ class AutorSerializer(serializers.ModelSerializer):
     livros = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='detalhe-livro'
+        view_name='Informações do livro'
     )
-    detalhe = serializers.HyperlinkedIdentityField(view_name='detalhe-autor')
+    detalhe = serializers.HyperlinkedIdentityField(view_name='Informações do autor')
 
     class Meta:
         model = Autor

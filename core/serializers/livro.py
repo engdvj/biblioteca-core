@@ -2,7 +2,7 @@ from rest_framework import serializers
 from core.models.livro import Livro
 
 class LivroSerializer(serializers.ModelSerializer):
-    detalhe = serializers.HyperlinkedIdentityField(view_name='detalhe-livro')
+    detalhe = serializers.HyperlinkedIdentityField(view_name='Informações do livro')
 
     class Meta:
         model = Livro

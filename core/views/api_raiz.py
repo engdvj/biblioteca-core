@@ -10,17 +10,17 @@ class ApiRaiz(APIView):
             "Listas": [
                 {
                     "nome": "Autores",
-                    "endpoint": reverse('lista-autores', request=request),
+                    "endpoint": reverse('Autores cadastrados', request=request),
                     "descrição": "Lista todos os autores."
                 },
                 {
                     "nome": "Livros",
-                    "endpoint": reverse('lista-livros', request=request),
+                    "endpoint": reverse('Livros cadastrados', request=request),
                     "descrição": "Lista todos os livros."
                 },
                 {
                     "nome": "Categorias",
-                    "endpoint": reverse('lista-categorias', request=request),
+                    "endpoint": reverse('Categorias cadastradas', request=request),
                     "descrição": "Lista todas as categorias."
                 }
             ],

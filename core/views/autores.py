@@ -10,9 +10,9 @@ class AutorLista(generics.ListCreateAPIView):
     filterset_class = AutorFiltro
     search_fields = ('^nome',)
     ordering_fields = ('nome',)
-    name = 'lista-autores'
+    name = 'Autores cadastrados'
 
 class AutorDetalhe(generics.RetrieveUpdateDestroyAPIView):
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer
-    name = 'detalhe-autor'
+    name = 'Informações do autor'

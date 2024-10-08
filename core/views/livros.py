@@ -10,9 +10,9 @@ class LivroLista(generics.ListCreateAPIView):
     filterset_class = LivroFiltro
     search_fields = ('^nome',)
     ordering_fields = ('nome', 'data_publicacao')
-    name = 'lista-livros'
+    name = 'Livros cadastrados'
 
 class LivroDetalhe(generics.RetrieveUpdateDestroyAPIView):
     queryset = Livro.objects.all()
     serializer_class = LivroSerializer
-    name = 'detalhe-livro'
+    name = 'Informações do livro'
