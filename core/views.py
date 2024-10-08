@@ -48,39 +48,11 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     name = 'category-detail'
 
-# View para exibir os links de todos os endpoints
 class ApiRoot(APIView):
     def get(self, request, *args, **kwargs):
         context = {
-            'Authors': {
-                'List': {
-                    'description': 'Para listar todos os autores',
-                    'link': reverse('author-list', request=request)
-                },
-                'Detail': {
-                    'description': 'Para detalhar, atualizar ou deletar um autor (exemplo com id=1)',
-                    'link': reverse('author-detail', kwargs={'pk': 1}, request=request)
-                },
-            },
-            'Books': {
-                'List': {
-                    'description': 'Para listar todos os livros',
-                    'link': reverse('book-list', request=request)
-                },
-                'Detail': {
-                    'description': 'Para detalhar, atualizar ou deletar um livro (exemplo com id=1)',
-                    'link': reverse('book-detail', kwargs={'pk': 1}, request=request)
-                },
-            },
-            'Categories': {
-                'List': {
-                    'description': 'Para listar todas as categorias',
-                    'link': reverse('category-list', request=request)
-                },
-                'Detail': {
-                    'description': 'Para detalhar, atualizar ou deletar uma categoria (exemplo com id=1)',
-                    'link': reverse('category-detail', kwargs={'pk': 1}, request=request)
-                },
-            }
+            'authors': reverse('author-list', request=request),
+            'books': reverse('book-list', request=request),
+            'categories': reverse('category-list', request=request)
         }
         return Response(context)
