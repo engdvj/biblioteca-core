@@ -1,35 +1,33 @@
 from rest_framework import serializers
-from .models import Author, Category, Book
+from .models import Autor, Categoria, Livro
 
-class AuthorSerializer(serializers.ModelSerializer):
-    books = serializers.HyperlinkedRelatedField(
+class AutorSerializer(serializers.ModelSerializer):
+    livros = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='book-detail'
+        view_name='detalhe-livro'
     )
-    detail = serializers.HyperlinkedIdentityField(view_name='author-detail')
+    detalhe = serializers.HyperlinkedIdentityField(view_name='detalhe-autor')
 
     class Meta:
-        model = Author
-        fields = ['id', 'name', 'books', 'detail']
+        model = Autor  # Atualizado
+        fields = ['id', 'nome', 'livros', 'detalhe']  # name -> nome
 
-
-class CategorySerializer(serializers.ModelSerializer):
-    books = serializers.HyperlinkedRelatedField(
+class CategoriaSerializer(serializers.ModelSerializer):
+    livros = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='book-detail'
+        view_name='detalhe-livro'
     )
-    detail = serializers.HyperlinkedIdentityField(view_name='category-detail')
+    detalhe = serializers.HyperlinkedIdentityField(view_name='detalhe-categoria')
 
     class Meta:
-        model = Category
-        fields = ['id', 'name', 'books', 'detail']
+        model = Categoria  # Atualizado
+        fields = ['id', 'nome', 'livros', 'detalhe']  # name -> nome
 
-
-class BookSerializer(serializers.ModelSerializer):
-    detail = serializers.HyperlinkedIdentityField(view_name='book-detail')
+class LivroSerializer(serializers.ModelSerializer):
+    detalhe = serializers.HyperlinkedIdentityField(view_name='detalhe-livro')
 
     class Meta:
-        model = Book
-        fields = ['id', 'name', 'category', 'author', 'publication_date', 'is_published', 'detail']
+        model = Livro  # Atualizado
+        fields = ['id', 'nome', 'categoria', 'autor', 'data_publicacao', 'publicado', 'detalhe']  # name -> nome, category -> categoria, etc.

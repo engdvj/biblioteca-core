@@ -1,112 +1,112 @@
 from django.core.management.base import BaseCommand
-from core.models import Category, Author, Book
+from core.models import Categoria, Autor, Livro
 
 
 class Command(BaseCommand):
     help = "Cria registros de exemplo no banco de dados"
 
     def handle(self, *args, **options):
-        categoria_misterio = Category.objects.create(name="Mistério")
-        categoria_ficcao = Category.objects.create(name="Ficção")
-        categoria_fantasia = Category.objects.create(name="Fantasia")
-        categoria_romance = Category.objects.create(name="Romance")
+        categoria_misterio = Categoria.objects.create(nome="Mistério")
+        categoria_ficcao = Categoria.objects.create(nome="Ficção")
+        categoria_fantasia = Categoria.objects.create(nome="Fantasia")
+        categoria_romance = Categoria.objects.create(nome="Romance")
 
-        autor_agatha_christie = Author.objects.create(name="Agatha Christie")
-        autor_arthur_c_clarke = Author.objects.create(name="Arthur C. Clarke")
-        autor_arthur_conan_doyle = Author.objects.create(name="Arthur Conan Doyle")
-        autor_cs_lewis = Author.objects.create(name="C.S. Lewis")
-        autor_emily_bronte = Author.objects.create(name="Emily Brontë")
-        autor_george_rr_martin = Author.objects.create(name="George R.R. Martin")
-        autor_isaac_asimov = Author.objects.create(name="Isaac Asimov")
-        autor_jrr_tolkien = Author.objects.create(name="J.R.R. Tolkien")
+        autor_agatha_christie = Autor.objects.create(nome="Agatha Christie")
+        autor_arthur_c_clarke = Autor.objects.create(nome="Arthur C. Clarke")
+        autor_arthur_conan_doyle = Autor.objects.create(nome="Arthur Conan Doyle")
+        autor_cs_lewis = Autor.objects.create(nome="C.S. Lewis")
+        autor_emily_bronte = Autor.objects.create(nome="Emily Brontë")
+        autor_george_rr_martin = Autor.objects.create(nome="George R.R. Martin")
+        autor_isaac_asimov = Autor.objects.create(nome="Isaac Asimov")
+        autor_jrr_tolkien = Autor.objects.create(nome="J.R.R. Tolkien")
 
-        Book.objects.create(
-            name="Assassinato no Expresso do Oriente",
-            author=autor_agatha_christie,
-            category=categoria_misterio,
-            publication_date="1934-01-01",
+        Livro.objects.create(
+            nome="Assassinato no Expresso do Oriente",
+            autor=autor_agatha_christie,
+            categoria=categoria_misterio,
+            data_publicacao="1934-01-01",
         )
-        Book.objects.create(
-            name="Morte no Nilo",
-            author=autor_agatha_christie,
-            category=categoria_misterio,
-            publication_date="1937-11-01",
+        Livro.objects.create(
+            nome="Morte no Nilo",
+            autor=autor_agatha_christie,
+            categoria=categoria_misterio,
+            data_publicacao="1937-11-01",
         )
-        Book.objects.create(
-            name="2001: Uma Odisseia no Espaço",
-            author=autor_arthur_c_clarke,
-            category=categoria_ficcao,
-            publication_date="1968-06-16",
+        Livro.objects.create(
+            nome="2001: Uma Odisseia no Espaço",
+            autor=autor_arthur_c_clarke,
+            categoria=categoria_ficcao,
+            data_publicacao="1968-06-16",
         )
-        Book.objects.create(
-            name="Encontro com Rama",
-            author=autor_arthur_c_clarke,
-            category=categoria_ficcao,
-            publication_date="1973-06-01",
+        Livro.objects.create(
+            nome="Encontro com Rama",
+            autor=autor_arthur_c_clarke,
+            categoria=categoria_ficcao,
+            data_publicacao="1973-06-01",
         )
-        Book.objects.create(
-            name="O Cão dos Baskervilles",
-            author=autor_arthur_conan_doyle,
-            category=categoria_misterio,
-            publication_date="1902-04-01",
+        Livro.objects.create(
+            nome="O Cão dos Baskervilles",
+            autor=autor_arthur_conan_doyle,
+            categoria=categoria_misterio,
+            data_publicacao="1902-04-01",
         )
-        Book.objects.create(
-            name="Um Estudo em Vermelho",
-            author=autor_arthur_conan_doyle,
-            category=categoria_misterio,
-            publication_date="1887-11-01",
+        Livro.objects.create(
+            nome="Um Estudo em Vermelho",
+            autor=autor_arthur_conan_doyle,
+            categoria=categoria_misterio,
+            data_publicacao="1887-11-01",
         )
-        Book.objects.create(
-            name="As Crônicas de Nárnia",
-            author=autor_cs_lewis,
-            category=categoria_fantasia,
-            publication_date="1950-10-16",
+        Livro.objects.create(
+            nome="As Crônicas de Nárnia",
+            autor=autor_cs_lewis,
+            categoria=categoria_fantasia,
+            data_publicacao="1950-10-16",
         )
-        Book.objects.create(
-            name="O Leão, a Feiticeira e o Guarda-Roupa",
-            author=autor_cs_lewis,
-            category=categoria_fantasia,
-            publication_date="1950-10-16",
+        Livro.objects.create(
+            nome="O Leão, a Feiticeira e o Guarda-Roupa",
+            autor=autor_cs_lewis,
+            categoria=categoria_fantasia,
+            data_publicacao="1950-10-16",
         )
-        Book.objects.create(
-            name="O Morro dos Ventos Uivantes",
-            author=autor_emily_bronte,
-            category=categoria_romance,
-            publication_date="1847-12-01",
+        Livro.objects.create(
+            nome="O Morro dos Ventos Uivantes",
+            autor=autor_emily_bronte,
+            categoria=categoria_romance,
+            data_publicacao="1847-12-01",
         )
-        Book.objects.create(
-            name="A Guerra dos Tronos",
-            author=autor_george_rr_martin,
-            category=categoria_fantasia,
-            publication_date="1996-08-06",
+        Livro.objects.create(
+            nome="A Guerra dos Tronos",
+            autor=autor_george_rr_martin,
+            categoria=categoria_fantasia,
+            data_publicacao="1996-08-06",
         )
-        Book.objects.create(
-            name="A Fúria dos Reis",
-            author=autor_george_rr_martin,
-            category=categoria_fantasia,
-            publication_date="1998-11-16",
+        Livro.objects.create(
+            nome="A Fúria dos Reis",
+            autor=autor_george_rr_martin,
+            categoria=categoria_fantasia,
+            data_publicacao="1998-11-16",
         )
-        Book.objects.create(
-            name="Fundação",
-            author=autor_isaac_asimov,
-            category=categoria_ficcao,
-            publication_date="1951-06-01",
+        Livro.objects.create(
+            nome="Fundação",
+            autor=autor_isaac_asimov,
+            categoria=categoria_ficcao,
+            data_publicacao="1951-06-01",
         )
-        Book.objects.create(
-            name="Eu, Robô",
-            author=autor_isaac_asimov,
-            category=categoria_ficcao,
-            publication_date="1950-12-02",
+        Livro.objects.create(
+            nome="Eu, Robô",
+            autor=autor_isaac_asimov,
+            categoria=categoria_ficcao,
+            data_publicacao="1950-12-02",
         )
-        Book.objects.create(
-            name="O Senhor dos Anéis",
-            author=autor_jrr_tolkien,
-            category=categoria_fantasia,
-            publication_date="1954-07-29",
+        Livro.objects.create(
+            nome="O Senhor dos Anéis",
+            autor=autor_jrr_tolkien,
+            categoria=categoria_fantasia,
+            data_publicacao="1954-07-29",
         )
-        Book.objects.create(
-            name="O Hobbit",
-            author=autor_jrr_tolkien,
-            category=categoria_fantasia,
-            publication_date="1937-09-21",
+        Livro.objects.create(
+            nome="O Hobbit",
+            autor=autor_jrr_tolkien,
+            categoria=categoria_fantasia,
+            data_publicacao="1937-09-21",
         )

@@ -1,27 +1,26 @@
 from django_filters import rest_framework as filters
-from .models import Book, Author, Category
+from .models import Livro, Autor, Categoria
 
-class BookFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='icontains')  # Filtro pelo nome do livro (contém)
-    author = filters.CharFilter(field_name='author__name', lookup_expr='icontains')  # Certifique-se de que o campo no modelo é 'author'
-    category = filters.AllValuesFilter(field_name='category__name')  # Filtro pelo nome da categoria
-
-    class Meta:
-        model = Book
-        fields = ['name', 'author', 'category', 'is_published']
-
-# Filtro personalizado para autores
-class AuthorFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='icontains')
+class LivroFiltro(filters.FilterSet):
+    nome = filters.CharFilter(lookup_expr='icontains')
+    autor = filters.CharFilter(field_name='autor__nome', lookup_expr='icontains')  # name -> nome, author -> autor
+    categoria = filters.AllValuesFilter(field_name='categoria__nome')  # category -> categoria
 
     class Meta:
-        model = Author
-        fields = ['name']
+        model = Livro  # Atualizado
+        fields = ['nome', 'autor', 'categoria', 'publicado']  # name -> nome, etc.
 
-# Filtro personalizado para categorias
-class CategoryFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='icontains')  # Filtro pelo nome da categoria (contém)
+class AutorFiltro(filters.FilterSet):
+    nome = filters.CharFilter(lookup_expr='icontains')
 
     class Meta:
-        model = Category
-        fields = ['name']
+        model = Autor  # Atualizado
+        fields = ['nome']  # name -> nome
+
+class CategoriaFiltro(filters.FilterSet):
+    nome = filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Categoria  # Atualizado
+        fields = ['nome']  # name -> nome
+
