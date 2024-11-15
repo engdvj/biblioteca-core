@@ -1,45 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 class ApiRaiz(APIView):
-    name = "Biblioteca API - Endpoints Principais"
+    authentication_classes = [TokenAuthentication]  # Autenticação baseada em token
+    permission_classes = [IsAuthenticated]  # Exige que o usuário esteja autenticado
 
     def get(self, request, *args, **kwargs):
-        context = {
-            "Listas": [
-                {
-                    "nome": "Autores",
-                    "endpoint": reverse('Autores cadastrados', request=request),
-                    "descrição": "Lista todos os autores."
-                },
-                {
-                    "nome": "Livros",
-                    "endpoint": reverse('Livros cadastrados', request=request),
-                    "descrição": "Lista todos os livros."
-                },
-                {
-                    "nome": "Categorias",
-                    "endpoint": reverse('Categorias cadastradas', request=request),
-                    "descrição": "Lista todas as categorias."
-                }
-            ],
-            "Detalhes": [
-                {
-                    "nome": "Autor",
-                    "endpoint": "/api/autores/{id}/",
-                    "descrição": "Obtém, atualiza ou deleta um autor específico pelo ID."
-                },
-                {
-                    "nome": "Livro",
-                    "endpoint": "/api/livros/{id}/",
-                    "descrição": "Obtém, atualiza ou deleta um livro específico pelo ID."
-                },
-                {
-                    "nome": "Categoria",
-                    "endpoint": "/api/categorias/{id}/",
-                    "descrição": "Obtém, atualiza ou deleta uma categoria específica pelo ID."
-                }
-            ]
-        }
-        return Response(context)
+        return Response({"message": "Acesso permitido com autenticação"})
