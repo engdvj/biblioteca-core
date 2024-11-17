@@ -1,14 +1,19 @@
 from rest_framework import serializers
 from core.models.autor import Autor
+from core.serializers.livro import LivroSimplificadoSerializer
 
-class AutorSerializer(serializers.ModelSerializer):
-    livros = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='Informações do livro'
-    )
-    detalhe = serializers.HyperlinkedIdentityField(view_name='Informações do autor')
+# Serializer para Autor que exibe o nome e o link dos livros associados
+class AutorSerializer(serializers.HyperlinkedModelSerializer):
+    livros = LivroSimplificadoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Autor
-        fields = ['id', 'nome', 'livros', 'detalhe']
+        fields = ['id', 'nome', 'livros']  # Inclui o nome e o URL dos livros
+        extra_kwargs = {'url': {'view_name': 'autor-detail'}}
+
+# Serializer Reduzido para mostrar apenas o link do autor
+class AutorLinkSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Autor
+        fields = ['nome', 'url']  # Apenas o nome e o URL do autor
+        extra_kwargs = {'url': {'view_name': 'autor-detail'}}

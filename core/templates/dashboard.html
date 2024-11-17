@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Biblioteca API</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Bem-vindo ao Dashboard</h1>
+        <div id="dados-protegidos"></div>
+    </div>
+
+    <script>
+        // Função para obter o token do cookie
+        function getToken() {
+            const token = localStorage.getItem('token');
+            if (token) return token;
+
+            const match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+            if (match) return match[2];
+
+            return null;
+        }
+
+        function fetchProtectedData() {
+            const token = getToken();
+            if (!token) {
+                alert("Token não encontrado! Por favor, faça login novamente.");
+                window.location.href = '/';  // Redireciona para a página de login
+                return;
+            }
+
+            fetch('/api/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Dados protegidos:", data);
+                document.getElementById('dados-protegidos').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                alert("Falha na autenticação. Por favor, faça login novamente.");
+                window.location.href = '/';  // Redireciona para a página de login
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchProtectedData);
+    </script>
+</body>
+</html>

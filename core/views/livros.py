@@ -1,18 +1,19 @@
 from rest_framework import generics
 from core.models.livro import Livro
-from core.serializers.livro import LivroSerializer
+from core.serializers.livro import LivroSerializer, LivroLinkSerializer
 from core.filters.livro import LivroFiltro
 
-
+# View para listar e criar livros, usando o serializer que mostra apenas links
 class LivroLista(generics.ListCreateAPIView):
     queryset = Livro.objects.all()
-    serializer_class = LivroSerializer
+    serializer_class = LivroLinkSerializer  # Usando o serializer que mostra apenas links
     filterset_class = LivroFiltro
     search_fields = ('^nome',)
     ordering_fields = ('nome', 'data_publicacao')
     name = 'Livros cadastrados'
 
+# View para detalhes de um livro específico
 class LivroDetalhe(generics.RetrieveUpdateDestroyAPIView):
     queryset = Livro.objects.all()
-    serializer_class = LivroSerializer
+    serializer_class = LivroSerializer  # Usando o serializer completo para detalhes
     name = 'Informações do livro'
