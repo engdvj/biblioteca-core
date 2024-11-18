@@ -49,34 +49,24 @@ class ColecaoTests(TestCase):
 # Configuração do logger
 logger = logging.getLogger(__name__)
 
-# Testes para Login
 class LoginTests(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        # Criação do usuário de teste
-        self.user = User.objects.create_user(username='testuser', password='password')
-        # Gera e salva o token
-        self.token = Token.objects.create(user=self.user)
+    @classmethod
+    def setUpTestData(cls):
+        cls.client = APIClient()
+        cls.user = User.objects.create_user(username='testuser', password='password')
+        cls.token, _ = Token.objects.get_or_create(user=cls.user)
+        print(f"Token no setUpTestData: {cls.token}")
 
     def test_login_success(self):
-        # Dados de login corretos
         data = {'username': 'testuser', 'password': 'password'}
-        response = self.client.post(reverse('login'), data)  # Usando reverse para a URL
-        
-        # Logs para depuração
+        print(f"Token no teste (antes da requisição): {self.token}")
+        response = self.client.post(reverse('login'), data, format='json')
         print(f"Status Code: {response.status_code}")
         print(f"Response Data: {response.data}")
-        print(f"Username: {self.user.username}")
-        print(f"Password (hashed): {self.user.password}")
-        
-        # Verifica se a resposta é 200 OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Verifica se o token está presente na resposta
         self.assertIn('token', response.data)
 
     def test_login_failure(self):
-        # Dados de login incorretos
         data = {'username': 'testuser', 'password': 'wrongpassword'}
         response = self.client.post(reverse('login'), data)
-        # Verifica se a resposta é 401 Unauthorized
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

@@ -1,13 +1,12 @@
-import logging
-from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
-
-logger = logging.getLogger(__name__)
+from django.contrib.auth import authenticate
 
 class Login(APIView):
+    permission_classes = []  # Permite requisições sem autenticação
+
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -18,17 +17,18 @@ class Login(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        logger.debug(f"Username: {username}, Password: {password}")
-
+        # Autentica o usuário com as credenciais fornecidas
         user = authenticate(username=username, password=password)
         if user is not None:
-            logger.debug(f"User {user.username} authenticated successfully")
+            # Obtém o token existente ou cria um novo, se necessário
             token, created = Token.objects.get_or_create(user=user)
+            # Aqui você pode executar o script ou lógica que precisa do token
+            print(f"Token: {token.key}")  # Exemplo de uso do token
+
+            # Retorna o token como resposta
             return Response({'token': token.key}, status=status.HTTP_200_OK)
         else:
-            logger.warning(f"Authentication failed for user {username}")
             return Response(
                 {'error': 'Credenciais inválidas'},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-
