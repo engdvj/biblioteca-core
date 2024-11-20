@@ -1,21 +1,20 @@
 from rest_framework import serializers
 from core.models.livro import Livro
+from core.models.autor import Autor
+from core.models.categoria import Categoria
 
 # Serializer para Livro que mostra links para autor e categoria
-class LivroSerializer(serializers.HyperlinkedModelSerializer):
-    autor = serializers.HyperlinkedRelatedField(
-        view_name='autor-detail',
-        read_only=True
+class LivroSerializer(serializers.ModelSerializer):
+    autor = serializers.PrimaryKeyRelatedField(
+        queryset=Autor.objects.all()  # Permite selecionar o autor por ID
     )
-    categoria = serializers.HyperlinkedRelatedField(
-        view_name='categoria-detail',
-        read_only=True
+    categoria = serializers.PrimaryKeyRelatedField(
+        queryset=Categoria.objects.all()  # Permite selecionar a categoria por ID
     )
 
     class Meta:
         model = Livro
         fields = ['id', 'nome', 'autor', 'categoria', 'data_publicacao', 'publicado']
-        extra_kwargs = {'url': {'view_name': 'livro-detail'}}
 
 # Serializer Reduzido para mostrar apenas o link do livro
 class LivroLinkSerializer(serializers.HyperlinkedModelSerializer):

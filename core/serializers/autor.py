@@ -3,12 +3,12 @@ from core.models.autor import Autor
 from core.serializers.livro import LivroSimplificadoSerializer
 
 # Serializer para Autor que exibe o nome e o link dos livros associados
-class AutorSerializer(serializers.HyperlinkedModelSerializer):
+class AutorSerializer(serializers.ModelSerializer):
     livros = LivroSimplificadoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Autor
-        fields = ['id', 'nome', 'livros']  # Inclui o nome e o URL dos livros
+        fields = ['id', 'nome', 'livros']  # Exibe os livros associados
         extra_kwargs = {'url': {'view_name': 'autor-detail'}}
 
 # Serializer Reduzido para mostrar apenas o link do autor

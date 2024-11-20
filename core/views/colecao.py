@@ -8,8 +8,8 @@ from core.filters.colecao import ColecaoFiltro  # Certifique-se de que o filtro 
 
 # View para listar e criar coleções, usando o serializer que mostra apenas links
 class ColecaoLista(generics.ListCreateAPIView):
-    queryset = Colecao.objects.all()
-    serializer_class = ColecaoSerializer  # Use ColecaoSerializer para criar coleções
+    queryset = Colecao.objects.prefetch_related('livros').all()  # Prefetch para melhorar a performance
+    serializer_class = ColecaoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     filterset_class = ColecaoFiltro

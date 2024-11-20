@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Biblioteca API</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="{% static 'js/main.js' %}" defer></script>  <!-- Carrega o arquivo JS -->
 </head>
 <body>
     <div class="login-container">
@@ -24,5 +23,84 @@
             <button type="button" onclick="submitLogin()">Log in</button>
         </form>
     </div>
+
+    <script>
+        // Função para obter o token CSRF do cookie
+        function getCSRFToken() {
+            let csrfToken = null;
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                if (cookie.trim().startsWith('csrftoken=')) {
+                    csrfToken = cookie.trim().substring('csrftoken='.length);
+                    break;
+                }
+            }
+            return csrfToken;
+        }
+    
+        // Função para realizar o login
+        function submitLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+        
+            fetch('/api/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Credenciais inválidas');
+                }
+            })
+            .then(data => {
+                console.log('Login bem-sucedido:', data);
+                // Redireciona para /api/
+                window.location.href = '/api/';
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        }
+    
+        // Função para buscar dados protegidos
+        window.fetchProtectedData = function () {  // Disponível no escopo global
+            console.log('Função fetchProtectedData chamada');
+        
+            const token = localStorage.getItem('token'); // Recupera o token armazenado
+        
+            if (!token) {
+                console.error('Token não encontrado! Certifique-se de fazer login.');
+                return;
+            }
+        
+            // Faz a requisição GET com o cabeçalho de autenticação
+            fetch('/api/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`, // Envia o token no cabeçalho
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                console.log('Resposta da API:', response);
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Falha na autenticação ou na requisição.');
+                }
+            })
+            .then(data => {
+                console.log('Dados protegidos recebidos:', data); // Exibe os dados no console
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados protegidos:', error.message);
+            });
+        };
+    </script>
 </body>
 </html>

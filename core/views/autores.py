@@ -6,11 +6,16 @@ from core.filters.autor import AutorFiltro
 # View para listar e criar autores, usando o serializer que mostra apenas links
 class AutorLista(generics.ListCreateAPIView):
     queryset = Autor.objects.all()
-    serializer_class = AutorLinkSerializer  # Usando o serializer que mostra apenas links
     filterset_class = AutorFiltro
     search_fields = ('^nome',)
     ordering_fields = ('nome',)
     name = 'Autores cadastrados'
+
+    def get_serializer_class(self):
+        # Usa o serializer completo para criação e o reduzido para listagem
+        if self.request.method == 'POST':
+            return AutorSerializer
+        return AutorLinkSerializer
 
 # View para detalhes de um autor específico
 class AutorDetalhe(generics.RetrieveUpdateDestroyAPIView):
