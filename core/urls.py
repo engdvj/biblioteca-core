@@ -6,7 +6,6 @@ from core.views.categorias import CategoriaLista, CategoriaDetalhe
 from core.views.colecao import ColecaoLista, ColecaoDetalhe
 from core.views.login import Login
 from core.views.index import index
-from core.views.debug import debug_auth
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -19,7 +18,6 @@ urlpatterns = [
     path('', index, name='index'),  # Tela de login
     path('api/login/', Login.as_view(), name='login'),  # Login endpoint
     path('api/', ApiRaiz.as_view(), name='api-root'),  # Página inicial após login
-    path('debug-auth/', debug_auth),
     
     # Endpoints do schema e da documentação
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),  # Endpoint do schema

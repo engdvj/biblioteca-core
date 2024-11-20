@@ -24,5 +24,4 @@ class Login(APIView):
             )
             return response
         else:
-            print(f"Falha na autenticação: username={username}, password={password}")
             return Response({'error': 'Credenciais inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
