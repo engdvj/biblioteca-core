@@ -19,5 +19,5 @@ class ApiRaiz(APIView):
             "autores": autores_link,
             "livros": livros_link,
             "categorias": categorias_link,
-            "minhas coleções": colecoes_link
+            "coleções": colecoes_link
         })

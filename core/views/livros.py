@@ -21,5 +21,5 @@ class LivroLista(generics.ListCreateAPIView):
 # View para detalhes de um livro específico
 class LivroDetalhe(generics.RetrieveUpdateDestroyAPIView):
     queryset = Livro.objects.all()
-    serializer_class = LivroSerializer  # Usando o serializer completo para detalhes
+    serializer_class = LivroSerializer  # Usa o serializer ajustado
     name = 'Informações do livro'

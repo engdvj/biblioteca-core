@@ -2,13 +2,11 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from rest_framework.authtoken.models import Token  # Import correto
+from rest_framework.authtoken.models import Token
 from core.models.colecao import Colecao
 from django.urls import reverse
-from rest_framework.authtoken.models import Token
-import logging
 
-# Testes para Colecao
+
 class ColecaoTests(TestCase):
     def setUp(self):
         self.client = APIClient()
@@ -24,16 +22,27 @@ class ColecaoTests(TestCase):
         self.assertEqual(Colecao.objects.last().colecionador, self.user)
 
     def test_permissao_editar_colecao(self):
-        outra_colecao = Colecao.objects.create(
+        colecao = Colecao.objects.create(
             nome='Coleção de Teste',
             descricao='Descrição',
             colecionador=self.user
         )
         data = {'nome': 'Coleção Editada'}
-        response = self.client.put(f'/colecoes/{outra_colecao.id}/', data)
+        response = self.client.put(f'/colecoes/{colecao.id}/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        outra_colecao.refresh_from_db()
-        self.assertEqual(outra_colecao.nome, 'Coleção Editada')
+        colecao.refresh_from_db()
+        self.assertEqual(colecao.nome, 'Coleção Editada')
+
+    def test_outro_usuario_nao_pode_editar_colecao(self):
+        outro_usuario = User.objects.create_user(username='outro', password='password')
+        outra_colecao = Colecao.objects.create(
+            nome='Coleção de Outro Usuário',
+            descricao='Descrição',
+            colecionador=outro_usuario
+        )
+        data = {'nome': 'Tentativa de Edição'}
+        response = self.client.put(f'/colecoes/{outra_colecao.id}/', data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_usuarios_nao_autenticados_nao_podem_criar_colecao(self):
         self.client.logout()
@@ -41,13 +50,53 @@ class ColecaoTests(TestCase):
         response = self.client.post('/colecoes/', data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_usuarios_nao_autenticados_nao_podem_editar_colecao(self):
+        colecao = Colecao.objects.create(
+            nome='Coleção do Usuário',
+            descricao='Descrição',
+            colecionador=self.user
+        )
+        self.client.logout()
+        data = {'nome': 'Tentativa de Edição'}
+        response = self.client.put(f'/colecoes/{colecao.id}/', data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_listagem_colecoes_para_usuario_autenticado(self):
+        Colecao.objects.create(
+            nome='Coleção do Usuário',
+            descricao='Minha coleção',
+            colecionador=self.user
+        )
+        outro_usuario = User.objects.create_user(username='outro', password='password')
+        Colecao.objects.create(
+            nome='Coleção de Outro Usuário',
+            descricao='Outra coleção',
+            colecionador=outro_usuario
+        )
         response = self.client.get('/colecoes/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), 0)
+        self.assertEqual(len(response.data['results']), 2)
 
-# Configuração do logger
-logger = logging.getLogger(__name__)
+    def test_deletar_colecao(self):
+        colecao = Colecao.objects.create(
+            nome='Coleção de Teste',
+            descricao='Descrição',
+            colecionador=self.user
+        )
+        response = self.client.delete(f'/colecoes/{colecao.id}/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Colecao.objects.count(), 0)
+
+    def test_outro_usuario_nao_pode_deletar_colecao(self):
+        outro_usuario = User.objects.create_user(username='outro', password='password')
+        outra_colecao = Colecao.objects.create(
+            nome='Coleção de Outro Usuário',
+            descricao='Descrição',
+            colecionador=outro_usuario
+        )
+        response = self.client.delete(f'/colecoes/{outra_colecao.id}/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
 
 class LoginTests(TestCase):
     @classmethod
@@ -55,14 +104,10 @@ class LoginTests(TestCase):
         cls.client = APIClient()
         cls.user = User.objects.create_user(username='testuser', password='password')
         cls.token, _ = Token.objects.get_or_create(user=cls.user)
-        print(f"Token no setUpTestData: {cls.token}")
 
     def test_login_success(self):
         data = {'username': 'testuser', 'password': 'password'}
-        print(f"Token no teste (antes da requisição): {self.token}")
         response = self.client.post(reverse('login'), data, format='json')
-        print(f"Status Code: {response.status_code}")
-        print(f"Response Data: {response.data}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('token', response.data)
 

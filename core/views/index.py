@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 
 def index(request):
-    # Se o usuário estiver autenticado, redireciona para /api/
     if request.user.is_authenticated:
+        # Redireciona para /api/ se o usuário estiver autenticado
         return redirect('/api/')
-    # Caso contrário, renderiza a página de login
+    # Renderiza o index.html para usuários não autenticados
     return render(request, 'index.html')
