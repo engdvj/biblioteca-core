@@ -1,6 +1,9 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission,  SAFE_METHODS
 
-class IsColecionador(permissions.BasePermission):
+class IsColecionador(BasePermission):
     def has_object_permission(self, request, view, obj):
-        # Permite acesso apenas se o usuário for o colecionador da coleção
+        # Permite leitura para todos
+        if request.method in SAFE_METHODS:
+            return True
+        # Apenas o colecionador pode modificar
         return obj.colecionador == request.user

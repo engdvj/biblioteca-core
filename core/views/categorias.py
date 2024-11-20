@@ -1,6 +1,7 @@
 from rest_framework import generics
 from core.models.categoria import Categoria
-from core.serializers.categoria import CategoriaSerializer, CategoriaLinkSerializer
+from core.serializers.categoria import CategoriaSerializer
+from core.serializers.relacionados import CategoriaLinkSerializer
 from core.filters.categoria import CategoriaFiltro
 
 # View para listar e criar categorias, usando o serializer que mostra apenas links

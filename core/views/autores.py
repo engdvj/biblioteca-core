@@ -1,6 +1,7 @@
 from rest_framework import generics
 from core.models.autor import Autor
-from core.serializers.autor import AutorSerializer, AutorLinkSerializer
+from core.serializers.autor import AutorSerializer
+from core.serializers.relacionados import AutorLinkSerializer
 from core.filters.autor import AutorFiltro
 
 # View para listar e criar autores, usando o serializer que mostra apenas links

@@ -1,6 +1,7 @@
 from rest_framework import generics
 from core.models.livro import Livro
-from core.serializers.livro import LivroSerializer, LivroLinkSerializer
+from core.serializers.livro import LivroSerializer
+from core.serializers.relacionados import LivroLinkSerializer
 from core.filters.livro import LivroFiltro
 
 # View para listar e criar livros, usando o serializer que mostra apenas links

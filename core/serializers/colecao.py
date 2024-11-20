@@ -1,31 +1,28 @@
 from rest_framework import serializers
 from core.models.colecao import Colecao
 from core.models.livro import Livro
-from core.serializers.livro import LivroSimplificadoSerializer
+from core.serializers.relacionados import LivroLinkSerializer
 
-# Serializer para Colecao que mostra o nome e o URL dos livros
 class ColecaoSerializer(serializers.ModelSerializer):
-    livros = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Livro.objects.all()
+    livros = LivroLinkSerializer(many=True, read_only=True)  # Para exibição detalhada
+    livros_ids = serializers.PrimaryKeyRelatedField(
+        queryset=Livro.objects.all(), many=True, write_only=True  # Para criação e atualização
     )
 
     class Meta:
         model = Colecao
-        fields = ['id', 'nome', 'descricao', 'livros']  # Inclua os livros no serializer
+        fields = ['id', 'nome', 'descricao', 'livros', 'livros_ids']
 
     def create(self, validated_data):
-        # Extrai os livros do payload
-        livros = validated_data.pop('livros', [])
+        # Manipula os livros enviados como IDs
+        livros = validated_data.pop('livros_ids', [])
         colecao = Colecao.objects.create(**validated_data)
-        colecao.livros.set(livros)  # Relaciona os livros à coleção
+        colecao.livros.set(livros)
         return colecao
 
-# Serializer para mostrar apenas o link da coleção
-class ColecaoLinkSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Colecao
-        fields = ['nome','url']  # Apenas o campo 'url'
-        extra_kwargs = {'url': {'view_name': 'colecao-detail'}}
-
-
-
+    def update(self, instance, validated_data):
+        # Manipula os livros enviados como IDs
+        livros = validated_data.pop('livros_ids', [])
+        instance = super().update(instance, validated_data)
+        instance.livros.set(livros)
+        return instance
