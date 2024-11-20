@@ -17,7 +17,7 @@ function submitLogin() {
     const password = document.getElementById('password').value;
     const csrfToken = getCSRFToken();
 
-    fetch('/api/login/', {
+    fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function fetchProtectedData() {
     }
 
     // Faz uma requisição GET para /api/ com o token no cabeçalho Authorization
-    fetch('/api/', {
+    fetch('http://127.0.0.1:8000/api/', {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`, // Adiciona o token no cabeçalho
