@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Biblioteca API</title>
     <style>
-        /* CSS incorporado diretamente */
+        /* Estilização Geral */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,70 +15,92 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f4f8;
+            background: linear-gradient(135deg, #007bff, #004080); /* Fundo gradiente */
+            color: #fff;
         }
+
         .dashboard-container {
-            background: #fff;
-            padding: 20px 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            padding: 40px 60px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             text-align: center;
+            color: #333;
         }
-        .dashboard-container h1 {
-            font-size: 24px;
+
+        .username-flag {
+            font-size: 26px;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
             margin-bottom: 20px;
             color: #333;
         }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
         .button-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px;
         }
+
         .button-group button {
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 15px 20px;
+            font-size: 18px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: all 0.3s ease;
+            font-weight: bold;
         }
-        .button-group button:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-        .button-group button:active {
-            transform: scale(0.98);
-        }
+
         .button-group button:first-child {
             background-color: #007bff;
-            color: white;
+            color: #fff;
         }
+
+        .button-group button:first-child:hover {
+            background-color: #0056b3;
+        }
+
         .button-group button:last-child {
-            background-color: #dc3545;
-            color: white;
+            background-color: #ff4d4d;
+            color: #fff;
+        }
+
+        .button-group button:last-child:hover {
+            background-color: #cc0000;
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <h1>Bem-vindo à API Biblioteca</h1>
-        <p>Escolha uma opção abaixo:</p>
+        <!-- Flag com o nome do usuário -->
+        <div class="username-flag">Bem-vindo(a), {{ user_name }}!</div>
+        <h1>Dashboard - Biblioteca API</h1>
+        <p> </p>
         <div class="button-group">
             <button onclick="redirectToAPI()">API</button>
-            <button onclick="logout()">LOGOUT</button>
+            <button onclick="logout()">Logout</button>
         </div>
     </div>
 
     <script>
-        // Redireciona para a API
         function redirectToAPI() {
             window.location.href = '/api/';
         }
 
-        // Realiza o logout
         function logout() {
             fetch('/api/logout/', {
                 method: 'POST',
