@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-q9+!m0lo&qsbvtm*_a#jbme*d(v^vmvqfe3e&nu5#9m_y_-*^1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.3.21', 'localhost']
+ALLOWED_HOSTS = ["192.168.3.21", "127.0.0.1", "localhost"]
 
 
 INSTALLED_APPS = [
@@ -68,13 +68,19 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://192.168.1.100",  # IP permitido
+    "http://192.168.3.21",
+    "http://127.0.0.1",
+    "http://localhost",
+    "http://192.168.3.21:8000",
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'Authorization', 'X-Auth-Token',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://192.168.3.21",
+]
 ROOT_URLCONF = 'biblioteca.urls'
 
 TEMPLATES = [
