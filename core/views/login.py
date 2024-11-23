@@ -5,7 +5,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 
 class Login(APIView):
-    permission_classes = []  # Permite acesso sem autenticação
+    permission_classes = [] 
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
@@ -16,7 +16,7 @@ class Login(APIView):
 
         user = authenticate(username=username, password=password)
         if user is not None:
-            # Gera ou recupera o token
+
             token, created = Token.objects.get_or_create(user=user)
             response = Response({'message': 'Login bem-sucedido'}, status=status.HTTP_200_OK)
             response.set_cookie(

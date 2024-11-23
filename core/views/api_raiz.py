@@ -9,7 +9,6 @@ class ApiRaiz(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        # Gera os links para as listas de livros, autores e coleções
         autores_link = request.build_absolute_uri(reverse('autores-lista'))
         livros_link = request.build_absolute_uri(reverse('livros-lista'))
         categorias_link = request.build_absolute_uri(reverse('categorias-lista'))

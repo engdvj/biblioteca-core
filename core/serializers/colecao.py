@@ -4,9 +4,9 @@ from core.models.livro import Livro
 from core.serializers.relacionados import LivroLinkSerializer
 
 class ColecaoSerializer(serializers.ModelSerializer):
-    livros = LivroLinkSerializer(many=True, read_only=True)  # Exibição detalhada dos livros com nome e link
+    livros = LivroLinkSerializer(many=True, read_only=True) 
     livros_selecao = serializers.PrimaryKeyRelatedField(
-        queryset=Livro.objects.all(), many=True, write_only=True, label="Livros"  # Campo para criação/atualização
+        queryset=Livro.objects.all(), many=True, write_only=True, label="Livros" 
     )
 
     class Meta:

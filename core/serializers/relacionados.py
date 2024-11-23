@@ -4,14 +4,12 @@ from core.models.autor import Autor
 from core.models.categoria import Categoria
 from core.models.colecao import Colecao
 
-# Serializer Reduzido para mostrar apenas o link do autor
 class AutorLinkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Autor
         fields = ['nome', 'url']
         extra_kwargs = {'url': {'view_name': 'autor-detail'}}
 
-# Serializer Reduzido para mostrar apenas o link da categoria
 class CategoriaLinkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Categoria
@@ -21,12 +19,11 @@ class CategoriaLinkSerializer(serializers.HyperlinkedModelSerializer):
 class ColecaoLinkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Colecao
-        fields = ['nome', 'url']  # Apenas nome e link
+        fields = ['nome', 'url'] 
         extra_kwargs = {
             'url': {'view_name': 'colecao-detail', 'lookup_field': 'pk'}
         }
 
-# Serializer para Livro que mostra apenas nome e URL
 class LivroLinkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Livro

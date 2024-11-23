@@ -210,7 +210,7 @@ class GeneralSerializerTests(TestCase):
         self.assertEqual(data['nome'], self.livro1.nome)
         self.assertEqual(data['autor']['nome'], self.autor.nome)
         self.assertEqual(data['categoria']['nome'], self.categoria.nome)
-        self.assertEqual(data['data_publicacao'], "1934-01-01")  # Formato correto da data
+        self.assertEqual(data['data_publicacao'], "1934-01-01") 
         self.assertTrue(data['publicado'])
 
     def test_colecao_create(self):
@@ -285,7 +285,7 @@ class ApiRaizTests(TestCase):
     def test_api_raiz(self):
         response = self.client.get('/api/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('coleções', response.data)  # Atualizado para refletir a chave correta
+        self.assertIn('coleções', response.data) 
 
 
         
@@ -357,7 +357,6 @@ class LoginViewTests(TestCase):
         
 class ManagePyTests(TestCase):
     def test_manage_py_runs(self):
-        # Testa se o comando "help" roda sem erros
         try:
             execute_from_command_line(['manage.py', 'help'])
         except SystemExit as e:

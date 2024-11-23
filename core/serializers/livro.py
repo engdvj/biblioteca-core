@@ -5,14 +5,14 @@ from core.models.categoria import Categoria
 from core.serializers.relacionados import AutorLinkSerializer, CategoriaLinkSerializer
 
 class LivroSerializer(serializers.ModelSerializer):
-    autor = AutorLinkSerializer(read_only=True)  # Exibição detalhada
-    categoria = CategoriaLinkSerializer(read_only=True)  # Exibição detalhada
+    autor = AutorLinkSerializer(read_only=True)  
+    categoria = CategoriaLinkSerializer(read_only=True) 
     autor_selecao = serializers.PrimaryKeyRelatedField(
         queryset=Autor.objects.all(), write_only=True, label="Autor"
-    )  # Para criação/atualização
+    )
     categoria_selecao = serializers.PrimaryKeyRelatedField(
         queryset=Categoria.objects.all(), write_only=True, label="Categoria"
-    )  # Para criação/atualização
+    ) 
 
     class Meta:
         model = Livro
