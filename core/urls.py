@@ -5,7 +5,9 @@ from core.views.autores import AutorLista, AutorDetalhe
 from core.views.categorias import CategoriaLista, CategoriaDetalhe
 from core.views.colecao import ColecaoLista, ColecaoDetalhe
 from core.views.login import Login
+from core.views.logout import Logout
 from core.views.index import index
+from core.views.dashboard import dashboard
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -17,6 +19,8 @@ urlpatterns = [
     # Endpoints para login 
     path('', index, name='index'), 
     path('api/login/', Login.as_view(), name='login'), 
+    path('api/logout/', Logout.as_view(), name='logout'),
+    path('dashboard/', dashboard, name='dashboard'),
     path('api/', ApiRaiz.as_view(), name='api-root'),  
     
     # Endpoints do schema e da documentação

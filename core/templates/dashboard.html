@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Biblioteca API</title>
+    <style>
+        /* CSS incorporado diretamente */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f4f8;
+        }
+        .dashboard-container {
+            background: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .dashboard-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .button-group button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .button-group button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        .button-group button:active {
+            transform: scale(0.98);
+        }
+        .button-group button:first-child {
+            background-color: #007bff;
+            color: white;
+        }
+        .button-group button:last-child {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Bem-vindo à API Biblioteca</h1>
+        <p>Escolha uma opção abaixo:</p>
+        <div class="button-group">
+            <button onclick="redirectToAPI()">API</button>
+            <button onclick="logout()">LOGOUT</button>
+        </div>
+    </div>
+
+    <script>
+        // Redireciona para a API
+        function redirectToAPI() {
+            window.location.href = '/api/';
+        }
+
+        // Realiza o logout
+        function logout() {
+            fetch('/api/logout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/';  // Redireciona para o formulário de login
+                } else {
+                    alert('Erro ao realizar logout');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao realizar logout:', error.message);
+            });
+        }
+    </script>
+</body>
+</html>
